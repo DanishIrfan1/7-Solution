@@ -1,38 +1,53 @@
 #include <iostream>
 using namespace std;
-void findLarge(int *ptr,int size){
-    int greatestVal;
-for (int i = 0; i < size; i++)
-    {
-        *(ptr + i) = rand() % 100;
+void bubbleSort(int array[], int size) {
+  for (int step = 0; step < size; ++step) {
+    for (int i = 0; i < size - step; ++i) {
+      if (array[i] > array[i + 1]) {
+        int temp = array[i];
+        array[i] = array[i + 1];
+        array[i + 1] = temp;
+      }
     }
-    for (int i = 0; i < size; i++)
-    {
-        cout << *(ptr + i) << ",\t";
-    }
-    cout<<endl;
-    greatestVal=*ptr;
-    for (int i = 0; i < size; i++)
-    {
-        if(greatestVal<(*(ptr+i))){
-            greatestVal=(*(ptr + i));
+  }
+}
+
+int FindLarge(int array[], int size){
+    int x; 
+    do{
+        cout<<"\nEnter a non-negative number: ";
+        cin>>x;
+    }while(x < 0);
+    bubbleSort(array,size);
+    for(int i = 0; i < size; i++){
+        if(x<array[i]){
+            return array[i];
         }
     }
-    cout<<"Greatest value in array is : "<<greatestVal;
-
+    return 0;
 }
-int main()
-{
-    int *ptr, size;
-    cout << "Enter array size(size should be B/W (1 to 15):  ";
-    cin >> size;
-    ptr = new int[size];
-    if(size<16){
-        findLarge(ptr,size);
+int main(){
+    int size;
+    do{
+    cout<<"Enter size (between 0 and 15): ";
+    cin>>size;
+    }while(size > 15 || size < 0);
+    int *array;
+    array = new int[size];
+    cout<<"Items intered automatically"<<endl;
+    for(int i = 0; i < size; i++){
+         array[i]=rand()%100;
     }
-    else{
-        cout<<"You Enter size Greater than 15!";
+    cout<<"Items in array"<<endl;
+    for(int i = 0; i < size; i++){
+         cout<<array[i]<<"-->";
     }
-     delete [] ptr;
+    int large_then = FindLarge(array, size);
+    if (large_then==0){
+        cout<<"Not found any greater number"<<endl;
+    }
+    else
+       cout<<"Next largest number than the input number is: "<<large_then<<endl;
+    delete []array;
     return 0;
 }
